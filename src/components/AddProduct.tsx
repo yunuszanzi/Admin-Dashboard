@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
+import { ScrollArea } from "./ui/scroll-area";
 
 const categories = [
   "T-shirts",
@@ -100,10 +101,10 @@ const AddProduct = () => {
   });
   return (
     <SheetContent>
-      <SheetHeader>
-        <SheetTitle className="mb-4">Add Product</SheetTitle>
-        <SheetDescription asChild>
-          <div className="max-h-[85vh] overflow-y-auto pr-2">
+      <ScrollArea className="h-screen">
+        <SheetHeader>
+          <SheetTitle className="mb-4">Add Product</SheetTitle>
+          <SheetDescription asChild>
             <Form {...form}>
               <form className="space-y-8">
                 <FormField
@@ -228,7 +229,75 @@ const AddProduct = () => {
                           ))}
                         </div>
                       </FormControl>
-                      <FormDescription>Select available sizes</FormDescription>
+                      <FormDescription>
+                        Select available sizes of the product.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="colors"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Colors</FormLabel>
+                      <FormControl>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-3 gap-4 my-2">
+                            {colors.map((color) => (
+                              <div
+                                className="flex items-center gap-2"
+                                key={color}
+                              >
+                                <Checkbox
+                                  id="color"
+                                  checked={field.value?.includes(color)}
+                                  onCheckedChange={(checked) => {
+                                    const currentValues = field.value || [];
+                                    if (checked) {
+                                      field.onChange([...currentValues, color]);
+                                    } else {
+                                      field.onChange(
+                                        currentValues.filter((v) => v !== color)
+                                      );
+                                    }
+                                  }}
+                                />
+                                <label
+                                  htmlFor="color"
+                                  className="text-xs flex items-center gap-2"
+                                >
+                                  <div
+                                    className="w-2 h-2 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                  {color}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                          {field.value && field.value.length > 0 && (
+                            <div>
+                              <p>
+                                {" "}
+                                Upload images for seected color
+                                {field.value.map((color) => (
+                                  <div className="" key={color}>
+                                    <div
+                                      className="w-2 h-2 rounded-full"
+                                      style={{ backgroundColor: color }}
+                                    />
+                                    <span>{color}</span>
+                                    <Input type="file" accept="image/*" />
+                                  </div>
+                                ))}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormDescription>Select available colors</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -237,9 +306,9 @@ const AddProduct = () => {
                 <Button type="submit">Submit</Button>
               </form>
             </Form>
-          </div>
-        </SheetDescription>
-      </SheetHeader>
+          </SheetDescription>
+        </SheetHeader>
+      </ScrollArea>
     </SheetContent>
   );
 };

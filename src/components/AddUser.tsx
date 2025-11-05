@@ -21,6 +21,7 @@ import {
 import { Input } from "./ui/input";
 
 import { Button } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
 
 const formSchema = z.object({
   fullName: z
@@ -39,10 +40,10 @@ const AddUser = () => {
   });
   return (
     <SheetContent>
-      <SheetHeader>
-        <SheetTitle className="mb-4">Add User</SheetTitle>
-        <SheetDescription asChild>
-          <div className="max-h-[85vh] overflow-y-auto pr-2">
+      <ScrollArea className="h-screen">
+        <SheetHeader>
+          <SheetTitle className="mb-4">Add User</SheetTitle>
+          <SheetDescription asChild>
             <Form {...form}>
               <form className="space-y-8">
                 <FormField
@@ -123,9 +124,9 @@ const AddUser = () => {
                 <Button type="submit">Submit</Button>
               </form>
             </Form>
-          </div>
-        </SheetDescription>
-      </SheetHeader>
+          </SheetDescription>
+        </SheetHeader>
+      </ScrollArea>
     </SheetContent>
   );
 };
