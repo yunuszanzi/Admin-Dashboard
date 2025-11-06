@@ -278,17 +278,21 @@ const AddProduct = () => {
                             ))}
                           </div>
                           {field.value && field.value.length > 0 && (
-                            <div>
-                              <p>
-                                {" "}
-                                Upload images for seected color
+                            <div className="mt-8 space-y-4">
+                              <p className="text-sm font-medium">
+                                Upload images for seected colors:
                                 {field.value.map((color) => (
-                                  <div className="" key={color}>
+                                  <div
+                                    className="flex items-center mt-4 gap-2"
+                                    key={color}
+                                  >
                                     <div
                                       className="w-2 h-2 rounded-full"
                                       style={{ backgroundColor: color }}
                                     />
-                                    <span>{color}</span>
+                                    <span className="text-sm min-w-[60px]">
+                                      {color}
+                                    </span>
                                     <Input type="file" accept="image/*" />
                                   </div>
                                 ))}
